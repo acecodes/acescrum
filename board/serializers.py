@@ -62,6 +62,19 @@ class TaskSerializer(serializers.ModelSerializer):
 
 	def get_links(self, obj):
 		request = self.context['request']
+		links = {'self':reverse('task-detail',
+			kwargs={'pk':obj.pk}, request=request),
+		'sprint':None,
+		'assigned':None
+		}
+
+		if obj.sprint_id:
+			links['sprint'] = reverse('sprint-detail',
+				kwargs={'pk':obj.sprint_id}, request=request)
+		if obj.assigned:
+			links['assigned'] = reverse('user-detail',
+				kwargs={User.USERNAME_FIELD: obj.assigned}, request=request)
+		return links
 
 		return {
 		'self': reverse('task-detail', kwargs={'pk':obj.pk}, request=request),
