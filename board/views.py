@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import authentication, permissions, viewsets, filters
 from .models import Sprint, Task
 from .serializers import SprintSerializer, TaskSerializer, UserSerializer
+from .forms import TaskFilter, SprintFilter
 
 User = get_user_model()
 
@@ -30,6 +31,7 @@ class SprintViewSet(DefaultsMixin, viewsets.ModelViewSet):
 
 	queryset = Sprint.objects.order_by('end')
 	serializer_class = SprintSerializer
+	filter_class = SprintFilter
 	search_fields = ('name', )
 	ordering_fields = ('end', 'name', )
 
@@ -37,6 +39,7 @@ class TaskViewSet(DefaultsMixin, viewsets.ModelViewSet):
 	"""API endpoint for listing and creating tasks."""
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
+	filter_class = TaskFilter
 	search_fields = ('name', 'description', )
 	ordering_fields = ('name', 'order', 'started', 'due', 'completed', )
 
