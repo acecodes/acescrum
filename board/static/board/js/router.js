@@ -21,7 +21,7 @@
 					this.current.$el = $();
 					this.current.remove();
 				}
-				this.current = view
+				this.current = view;
 				this.current.render();
 			}
 
@@ -30,4 +30,4 @@
 
 	app.router = AppRouter;
 
-})(jquery, Backgone, _, app);
+})(jQuery, Backbone, _, app);

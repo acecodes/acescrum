@@ -1,4 +1,4 @@
-(function, ($, Backbone, _, app) {
+(function ($, Backbone, _, app) {
 	var HomepageView = Backbone.View.extend({
 	templateName: '#home-template',
 	initialize: function() {
@@ -16,4 +16,5 @@
 });
 
 app.views.HomepageView = HomepageView;
+
 })(jQuery, Backbone, _, app);
