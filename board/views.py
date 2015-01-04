@@ -4,6 +4,7 @@ from .models import Sprint, Task
 from .serializers import SprintSerializer, TaskSerializer, UserSerializer
 from .forms import TaskFilter, SprintFilter
 
+
 User = get_user_model()
 
 class DefaultsMixin(object):
