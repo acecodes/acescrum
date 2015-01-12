@@ -57,7 +57,37 @@
             }
             this.trigger('done');
             this.remove();
+        },
+        modelFailure: function (model, xhr, options) {
+            var errors = xhr.responseJSON;
+            this.showErrors(errors);
         }
+    });
+
+    var NewSprintView = FormView.extend({
+        templateName: '#new-sprint-template',
+        className: 'new-sprint',
+        events: _.extend({
+            'click button.cancel':'done',
+        }, FormView.prototype.events),
+        submit: function (event) {
+            var self = this,
+                attributes = {};
+            FormView.prototype.submit.apply(this, arguments);
+            attributes = this.serializeForm(this.form);
+            app.collections.ready.done(function () {
+                app.sprints.create(attributes, {
+                    wait: true,
+                    success: $.proxy(self.success, self),
+                    error: $.proxy(self.modelFailure, self)
+                });
+            });
+        },
+        success: function (model) {
+            this.done();
+            window.location.hash = '#sprint/' + model.get('id');
+        }
+
     });
     
     var HomepageView = TemplateView.extend({
