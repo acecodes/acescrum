@@ -4,6 +4,7 @@
         routes: {
             '': 'home'
         },
+        
         initialize: function (options) {
             this.contentElement = '#content';
             this.current = null;
@@ -12,10 +13,20 @@
             this.header.render();
             Backbone.history.start();
         },
+
         home: function () {
             var view = new app.views.HomepageView({el: this.contentElement});
             this.render(view);
         },
+
+        sprint: function (id) {
+            var view = new app.views.SprintView({
+                el: this.contentElement,
+                sprintId: id
+            });
+            this.render(view);
+        },
+        
         route: function (route, name, callback) {
             // Override default route to enforce login on every page
             var login;
@@ -41,6 +52,7 @@
             });
             return Backbone.Router.prototype.route.apply(this, [route, name, callback]);
         },
+        
         render: function (view) {
             if (this.current) {
                 this.current.$el = $();
