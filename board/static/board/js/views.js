@@ -14,7 +14,7 @@
             return {};
         }
     });
-    
+
     var FormView = TemplateView.extend({
         events: {
             'submit form': 'submit'
@@ -93,11 +93,11 @@
     var HomepageView = TemplateView.extend({
         templateName: '#home-template',
         events: {
-            'click button.add':'renderAddForm'
+            'click button.add': 'renderAddForm'
         },
 
-        initilize: function (options) {
-        	var self = this;
+        initialize: function (options) {
+            var self = this;
         	TemplateView.prototype.initialize.apply(this, arguments);
         	app.collections.ready.done(function (){
         		var end = new Date();
@@ -122,7 +122,7 @@
             event.preventDefault();
             link.before(view.el);
             link.hide();
-            view.render()
+            view.render();
             view.on('done', function () {
                 link.show();
             });
@@ -160,7 +160,7 @@
             event.preventDefault();
             app.session.delete();
             window.location = '/';
-        },
+        }
 
     });
 
@@ -172,11 +172,13 @@
             this.sprintId = options.sprintId;
             this.sprint = null;
             app.collections.ready.done(function () {
-                self.sprint = app.sprints.push({id: self.sprintId});
-                self.sprint.fetch({
-                    success: function() {
-                        self.render();
-                    }
+                app.sprints.getOrFetch(self.sprintId).done(function (sprint) {
+                    self.sprint = sprint;
+                    self.render();
+                }).fail(function (sprint) {
+                    self.sprint = sprint;
+                    self.sprint.invalid = true;
+                    self.render();
                 });
             });
         },
