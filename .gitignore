@@ -46,6 +46,7 @@ coverage.xml
 
 # Django stuff:
 *.log
+staticfiles
 
 # Sphinx documentation
 docs/_build/
@@ -58,3 +59,6 @@ migrations/
 
 # PyCharm files
 .idea/
+
+# Environment variables
+.env
