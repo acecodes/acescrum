@@ -61,7 +61,7 @@ DATABASES = {
         'NAME': 'scrum',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST':'localhost',
+        'HOST': 'localhost',
     }
 }
 

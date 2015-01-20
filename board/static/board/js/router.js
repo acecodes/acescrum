@@ -1,11 +1,12 @@
-(function ($, Backbone, _, app) {
+(function($, Backbone, _, app) {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
-            '': 'home'
+            '': 'home',
+            'sprint/:id':'sprint'
         },
-        
-        initialize: function (options) {
+
+        initialize: function(options) {
             this.contentElement = '#content';
             this.current = null;
             this.header = new app.views.HeaderView();
@@ -14,24 +15,26 @@
             Backbone.history.start();
         },
 
-        home: function () {
-            var view = new app.views.HomepageView({el: this.contentElement});
+        home: function() {
+            var view = new app.views.HomepageView({
+                el: this.contentElement
+            });
             this.render(view);
         },
 
-        sprint: function (id) {
+        sprint: function(id) {
             var view = new app.views.SprintView({
                 el: this.contentElement,
                 sprintId: id
             });
             this.render(view);
         },
-        
-        route: function (route, name, callback) {
+
+        route: function(route, name, callback) {
             // Override default route to enforce login on every page
             var login;
             callback = callback || this[name];
-            callback = _.wrap(callback, function (original) {
+            callback = _.wrap(callback, function(original) {
                 var args = _.without(arguments, original);
                 if (app.session.authenticated()) {
                     original.apply(this, args);
@@ -41,7 +44,7 @@
                     // Bind original callback once the login is successful
                     login = new app.views.LoginView();
                     $(this.contentElement).after(login.el);
-                    login.on('done', function () {
+                    login.on('done', function() {
                         this.header.render();
                         $(this.contentElement).show();
                         original.apply(this, args);
@@ -52,8 +55,8 @@
             });
             return Backbone.Router.prototype.route.apply(this, [route, name, callback]);
         },
-        
-        render: function (view) {
+
+        render: function(view) {
             if (this.current) {
                 this.current.$el = $();
                 this.current.remove();
@@ -62,7 +65,7 @@
             this.current.render();
         }
     });
-    
+
     app.router = AppRouter;
 
 })(jQuery, Backbone, _, app);
