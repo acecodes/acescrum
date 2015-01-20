@@ -1,8 +1,10 @@
 Django==1.7.2
 Markdown==2.5.2
+SQLAlchemy==0.9.8
 dj-database-url==0.3.0
 dj-static==0.0.6
 django-filter==0.9.1
+django-postgrespool==0.3.0
 django-toolbelt==0.0.1
 djangorestframework==3.0.2
 gunicorn==19.1.1

@@ -30,10 +30,7 @@ TEMPLATE_DEBUG = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'scrum',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'NAME': 'acescrum',
     }
 }
 
@@ -49,6 +46,8 @@ STATIC_URL = '/static/'
 
 # Parse database configuration from $DATABASE_URL
 DATABASES['default'] = dj_database_url.config()
+# Enable Connection Pooling
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
