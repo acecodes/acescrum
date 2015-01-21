@@ -63,6 +63,6 @@ USE_TZ = True
 
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
-    os.path.join('/', 'static'),
+    os.path.join('acescrum', 'static'),
 )
 STATIC_URL = '/static/'
