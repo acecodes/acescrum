@@ -44,6 +44,18 @@ input, textarea {
     display: block;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    text-align:center;
+}
+
+h3 {
+    color:rgb(40, 75, 121);
+}
+
+hr.front-page {
+    margin: 0px 40% 0 40%;
+}
+
 /* Header
 ==================== */
 header {
