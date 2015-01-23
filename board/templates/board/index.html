@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>AceScrum | Keeping Your Development Agile</title>
+		<title>AceScrum | Simple Agile Development</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static 'board/vendor/normalize.css' %}">
@@ -38,12 +38,12 @@
             </form>
         </script>
         <script type="text/html" id="header-template">
-            <span class="title">AceScrum</span>
-            <span class="github"><a href="https://github.com/acecodes/acescrum">GitHub</a></span>
+            <span class="title"><a href="/">AceScrum</a></span>
             <% if (authenticated ) { %>
                 <nav>
                     <a href="/" class="button">Your Sprints</a>
                     <a href="#" class="logout button">Logout</a>
+                    <a href="https://github.com/acecodes/acescrum" class="button">GitHub</a>
                 </nav>
             <% } %>
         </script>
@@ -63,9 +63,13 @@
             <% if (sprint !== null) { %>
                 <% if (!sprint.invalid) { %>
                     <h2><%- sprint.get('name') %></h2>
-                    <span class="due-date">Due <%- sprint.get('end') %></span>
+                    <span class="due-date">Due: <b>
+                    <%- sprint.get('end') %></b></span>
+                    <hr class="sprints">
                     <p class="description"><%- sprint.get('description') %></p>
                     <div class="tasks"></div>
+                    <hr class="sprints">
+                    <h3><a href="/" class="button">Back</a></h3>
                 <% } else { %>
                     <h1>Sprint <%- sprint.get('id') %> not found.</h1>
                 <% } %>
