@@ -54,9 +54,6 @@ docs/_build/
 # PyBuilder
 target/
 
-# Django migrations
-migrations/
-
 # PyCharm files
 .idea/
 
