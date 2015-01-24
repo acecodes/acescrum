@@ -15,6 +15,39 @@ class Sprint(models.Model):
         return self.name or _('Sprint ending %s') % self.end
 
 
+class Team(models.Model):
+
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Member(models.Model):
+
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=75)
+
+    def __str__(self):
+        return "{0} {1}".format(self.first_name, self.last_name)
+
+
+class TeamRole(models.Model):
+
+    role = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.role
+
+
+class TeamMember(models.Model):
+
+    member = models.ForeignKey(Member)
+    role = models.ForeignKey(TeamRole)
+    team = models.ForeignKey(Team)
+
+
 class Task(models.Model):
 
     """Unit of work to be done for a sprint."""

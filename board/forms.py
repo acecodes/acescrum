@@ -1,8 +1,25 @@
 import django_filters
 from .models import Task, Sprint
 from django.contrib.auth import get_user_model
+from django.contrib.admin import ModelAdmin
+
 
 User = get_user_model()
+
+
+class MemberAdminForm(ModelAdmin):
+
+    list_display = ('id', 'first_name', 'last_name', 'email',)
+
+
+class TeamAdminForm(ModelAdmin):
+
+    list_display = ('id', 'name',)
+
+
+class TeamMemberAdminForm(ModelAdmin):
+
+    list_display = ('member', 'role', 'team',)
 
 
 class NullFilter(django_filters.BooleanFilter):
