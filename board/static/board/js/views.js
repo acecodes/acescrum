@@ -241,6 +241,14 @@
             return {
                 sprint: this.sprint
             };
+        },
+        render: function() {
+            TemplateView.prototype.render.apply(this, arguments);
+            _.each(this.statuses, function (view, name) {
+                $('.tasks', this.$el).append(view.el);
+                view.delegateEvents();
+                view.render();
+            }, this);
         }
     });
 
