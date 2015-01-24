@@ -22,6 +22,11 @@ class TeamMemberAdminForm(ModelAdmin):
     list_display = ('member', 'role', 'team',)
 
 
+class SprintAdminForm(ModelAdmin):
+
+    list_display = ('id', 'name', 'team', 'end',)
+
+
 class NullFilter(django_filters.BooleanFilter):
 
     """Filter on a field set as null or not."""
