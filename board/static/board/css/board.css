@@ -132,12 +132,13 @@ input#id_username, input#id_password {
 }
 .sprints a.sprint {
     padding: 25px;
-    float: left;
     text-align: center;
     background: #1A3867;
     margin: 8px 8px 0 0;
     color: #FFF;
     transition: background 200ms ease-out;
+    display:inline-block;
+    width:100px;
 }
 .sprints a.sprint:hover {
     background: #03142F;
