@@ -27,6 +27,12 @@ class SprintAdminForm(ModelAdmin):
     list_display = ('id', 'name', 'team', 'end',)
 
 
+class TaskAdminForm(ModelAdmin):
+
+    list_display = (
+        'id', 'name', 'sprint', 'status', 'started', 'due', 'completed')
+
+
 class NullFilter(django_filters.BooleanFilter):
 
     """Filter on a field set as null or not."""
