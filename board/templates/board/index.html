@@ -69,7 +69,7 @@
                     <p class="description"><%- sprint.get('description') %></p>
                     <div class="tasks"></div>
                     <hr class="sprints">
-                    <h3><a href="/" class="button">Back</a></h3>
+                    <h3>
                 <% } else { %>
                     <h1>Sprint <%- sprint.get('id') %> not found.</h1>
                 <% } %>
@@ -103,20 +103,20 @@
         </script>
 
         <script type="text/html" id="task-detail-template">
-            <div data-field="name" class="name">
+            <div data-field="name" class="name" contenteditable="true">
                 <%- task.get('name') %>
             </div>
-            <div data-field="description" class="description">
+            <div data-field="description" class="description" contenteditable="true">
                 <%- task.get('description') %>
             </div>
             <div class="with-label">
                 <div class="label">Due:</div>
-                <div data-field="due" class="due date">
+                <div data-field="due" class="due date" contenteditable="true">
                     <%- task.get('due') || empty %>
                 </div>
             <div class="with-label">
                 <div class="label">Assigned To:</div>
-                <div data-field="assigned" class="assigned">
+                <div data-field="assigned" class="assigned" contenteditable="true">
                     <%- task.get('assigned') || empty %>
                 </div>
             </div>
@@ -125,6 +125,7 @@
                 <button class="save" hidden type="submit">Save</button>
             </form>
         </script>
+
 	</head>
 	<body>
         <div id="content"></div>

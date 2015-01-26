@@ -255,12 +255,14 @@
             TemplateView.prototype.render.apply(this, arguments);
             this.$el.css('order', this.task.get('order'));
         },
-        details: function () {
-            var view = new TaskDetailView({task: this.task});
+        details: function() {
+            var view = new TaskDetailView({
+                task: this.task
+            });
             this.$el.before(view.el);
             this.$el.hide();
             view.render();
-            view.on('done', function () {
+            view.on('done', function() {
                 this.$el.show();
             }, this);
         }
@@ -340,7 +342,9 @@
             }
         },
         renderTask: function(task) {
-            var view = new TaskItemView({task: task});
+            var view = new TaskItemView({
+                task: task
+            });
             _.each(this.statuses, function(container, name) {
                 if (container.sprint == task.get('sprint') &&
                     container.status == task.get('status')) {
@@ -375,7 +379,7 @@
         },
         submit: function(event) {
             FormView.prototype.submit.apply(this, arguments);
-            this.task.save(this, changes, {
+            this.task.save(this.changes, {
                 wait: true,
                 success: $.proxy(this.success, this),
                 error: $.proxy(this.modelFailure, this)
@@ -385,12 +389,33 @@
             this.changes = {};
             $('button.save', this.$el).hide();
         },
-        editField: function (event) {
+        editField: function(event) {
             var $this = $(event.currentTarget),
-                value = $this.text().replcae(/^\s+|\s+$/g,''),
+                value = $this.text().replace(/^\s+|\s+$/g, ''),
                 field = $this.data('field');
             this.changes[field] = value;
             $('button.save', this.$el).show();
+        },
+        showErrors: function(errors) {
+            _.map(errors, function(fieldErrors, name) {
+                var field = $('[data-field=' + name + ']', this.$el);
+                if (field.length === 0) {
+                    field = $('[data-field]', this.$el).first();
+                }
+
+                function appendError(msg) {
+                    var parent = field.parent('.with-label'),
+                        error = this.errorTemplate({
+                            msg: msg
+                        });
+                    if (parent.length === 0) {
+                        field.before(error);
+                    } else {
+                        parent.before(error);
+                    }
+                }
+                _.map(fieldErrors, appendError, this);
+            }, this);
         }
 
     });
