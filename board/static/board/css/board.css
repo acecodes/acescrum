@@ -66,6 +66,9 @@ hr.front-page {
 hr.sprints {
     margin: 2% 40% 2% 40%;
 }
+hr.tasks {
+    margin: 10% 20% 2% 20%;
+}
 form {
     margin: 0 auto;
     width: 500px;
@@ -160,7 +163,6 @@ input#id_username, input#id_password {
     display: flex;
     -webkit-flex-flow: row wrap;
     align-items: strech;
-
 }
 .tasks .status {
     background: #EEE;
@@ -168,22 +170,22 @@ input#id_username, input#id_password {
     padding: 0 10px 15px 10px;
     margin: auto;
     width: 17%;
-    text-align:center;
+    text-align: center;
 }
-
 .tasks .status input, .tasks .status textarea, .tasks .status input#id_name {
     margin: 8% 12% 8% 12%;
 }
-
 .tasks .status form {
     margin: 0 auto;
     width: 100%;
     text-align: center;
 }
-
-
 .tasks .status label {
-    text-align:center;
+    text-align: center;
+}
+
+.tasks .status form.add-task {
+    margin-top:10%;
 }
 
 .tasks .status .list {
@@ -195,13 +197,13 @@ input#id_username, input#id_password {
     -webkit-flex-flow: row wrap;
     flex-direction: row;
     justify-content: space-around;
+    margin-bottom:10%;
 }
 .task-detail input, .task-detail textarea {
     width: 90%;
 }
-
 .tasks .task-item {
-width: 100%;
-margin: 5px 0;
-padding: 3px;
+    width: 100%;
+    margin: 5px 0;
+    padding: 3px;
 }

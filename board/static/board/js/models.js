@@ -8,7 +8,7 @@
 
     function getCookie(name) {
         var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
+        if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
             for (var i = 0; i < cookies.length; i++) {
                 var cookie = $.trim(cookies[i]);
@@ -118,7 +118,7 @@
 
     app.session = new Session();
 
-    app.models.Sprint = Backbone.Model.extend({
+    app.models.Sprint = BaseModel.extend({
         fetchTasks: function() {
             var links = this.get('links');
             if (links && links.tasks) {
@@ -129,7 +129,7 @@
             }
         }
     });
-    app.models.Task = Backbone.Model.extend({
+    app.models.Task = BaseModel.extend({
         statusClass: function() {
             var sprint = this.get('sprint'),
                 status;
@@ -143,7 +143,7 @@
         inBacklog: function() {
             return !this.get('sprint');
         },
-        inSprint: function() {
+        inSprint: function(sprint) {
             return sprint.get('id') == this.get('sprint');
         }
     });
