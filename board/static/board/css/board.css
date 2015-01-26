@@ -9,9 +9,9 @@ body {
 a {
     text-decoration: none;
 }
-
-a:visited { color:black; }
-
+a:visited {
+    color: black;
+}
 button, a.button {
     font-size: 13px;
     padding: 5px 8px;
@@ -22,7 +22,7 @@ button, a.button {
 }
 button:hover, a.button:hover {
     background-color: #A4C8F0;
-    border:1px solid #03142F;
+    border: 1px solid #03142F;
     color: #03142F;
 }
 input, textarea {
@@ -30,21 +30,17 @@ input, textarea {
     font-family: inherit;
     border: 1px solid #cccccc;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    display:block;
+    display: block;
     font-size: 18px;
     margin: 10px 0 16px 0;
     padding: 10px;
 }
-
 input {
-        text-align:center;
+    text-align: center;
 }
-
 input#id_name, input#id_end, input#id_description {
-    margin:3% auto 3% auto;
-
+    margin: 3% auto 3% auto;
 }
-
 #content {
     padding-left: 25px;
     padding-right: 25px;
@@ -73,7 +69,7 @@ hr.sprints {
 form {
     margin: 0 auto;
     width: 500px;
-    text-align:center;
+    text-align: center;
 }
 
 /* Header
@@ -122,13 +118,14 @@ header nav a:hover {
     display: block;
 }
 input#id_username, input#id_password {
-    margin:3% auto 3% auto;
+    margin: 3% auto 3% auto;
 }
+
 /* Sprint Listing
 ==================== */
 .sprints {
     margin-top: 25px;
-    text-align:center;
+    text-align: center;
 }
 .sprints a.sprint {
     padding: 25px;
@@ -137,8 +134,8 @@ input#id_username, input#id_password {
     margin: 8px 8px 0 0;
     color: #FFF;
     transition: background 200ms ease-out;
-    display:inline-block;
-    width:100px;
+    display: inline-block;
+    width: 100px;
 }
 .sprints a.sprint:hover {
     background: #03142F;
@@ -149,6 +146,56 @@ input#id_username, input#id_password {
 .new-sprint {
     border: 1px solid #CCC;
     padding: 2%;
-    width:500px;
-    margin:auto;
+    width: 500px;
+    margin: auto;
+}
+
+/* Tasks
+==================== */
+.tasks {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    align-items: strech;
+
+}
+.tasks .status {
+    background: #EEE;
+    border: 1px solid #CCC;
+    padding: 0 10px 15px 10px;
+    margin: auto;
+    width: 17%;
+    text-align:center;
+}
+
+.tasks .status input, .tasks .status textarea, .tasks .status input#id_name {
+    margin: 8% 12% 8% 12%;
+}
+
+.tasks .status form {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+
+.tasks .status label {
+    text-align:center;
+}
+
+.tasks .status .list {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.task-detail input, .task-detail textarea {
+    width: 90%;
 }
