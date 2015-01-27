@@ -2,8 +2,9 @@ from urllib.parse import urlparse
 from tornado.ioloop import IOLoop
 from tornado.web import Application
 from tornado.options import define, parse_command_line, options
-from tornado.websocket import WebSocketHandler
+from tornado.websocket import WebSocketHandler, WebSocketClosedError
 from tornado.httpserver import HTTPServer
+from collections import defaultdict
 
 import logging
 import signal
@@ -27,12 +28,49 @@ class SprintHandler(WebSocketHandler):
 
     def open(self, sprint):
         """Subscribe to sprint updates on a new connection"""
+        self.sprint = sprint
+        self.application.add_subscriber(self.sprint, self)
 
     def on_message(self, message):
         """Broadcast updates to other interested clients"""
+        self.application.broadcast(message, channel=self.sprint, sender=self)
 
     def on_close(self):
         """Remove subscription"""
+        self.application.remove_subscriber(self.sprint, self)
+
+
+class ScrumApplication(Application):
+
+    def __init__(self, **kwargs):
+        routes = [
+         (r'/(?P<sprint>[0-9]+)', SprintHandler),
+        ]
+        super().__init__(routes, **kwargs)
+        self.subscriptions = defaultdict(list)
+
+    def add_subscriber(self, channel, subscriber):
+        self.subscriptions[channel].append(subscriber)
+
+    def remove_subscriber(self, channel, subscriber):
+        self.subscriptions[channel].remove(subscriber)
+
+    def get_subscribers(self, channel):
+        return self.subscriptions[channel]
+
+    def broadcast(self, message, channel=None, sender=None):
+        if channel is None:
+            for c in self.subscriptions.keys():
+                self.broadcast(message, channel=c, sender=sender)
+        else:
+            peers = self.get_subscribers(channel)
+            for peer in peers:
+                if peer != sender:
+                    try:
+                        peer.write_message(message)
+                    except WebSocketClosedError:
+                        # Remove dead peer
+                        self.remove_subscriber(channel, peer)
 
 
 def shutdown(server):
@@ -48,8 +86,7 @@ def shutdown(server):
 
 if __name__ == '__main__':
     parse_command_line()
-    application = Application([
-        (r'/(?P<sprint>[0-9]+)', SprintHandler)])
+    application = ScrumApplication(debug=options.debug)
     server = HTTPServer(application)
     server.listen(options.port)
     signal.signal(signal.SIGINT, lambda sig, frame: shutdown(server))
