@@ -212,6 +212,7 @@ input#id_username, input#id_password {
     width: 100%;
     margin: 5px 0;
     padding: 3px;
+    background:#F5F5F5;
 }
 
 /* Task Detail
