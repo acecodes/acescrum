@@ -90,7 +90,7 @@
     var HomepageView = TemplateView.extend({
         templateName: '#home-template',
         events: {
-            'click button.add': 'renderAddForm'
+            'click button.add-sprint': 'renderAddForm'
         },
         initialize: function (options) {
             var self = this;
@@ -179,7 +179,7 @@
         className: 'status',
         templateName: '#status-template',
         events: {
-            'click button.add': 'renderAddForm'
+            'click button.add-task': 'renderAddForm'
         },
         initialize: function (options) {
             TemplateView.prototype.initialize.apply(this, arguments);

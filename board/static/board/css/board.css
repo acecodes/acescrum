@@ -63,6 +63,9 @@ h3 {
 hr.front-page {
     margin: 0px 40% 0 40%;
 }
+hr.sprint-page {
+    margin: 2% 40% 2% 40%;
+}
 hr.sprints {
     margin: 2% 40% 2% 40%;
 }

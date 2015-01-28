@@ -10,10 +10,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="{% static 'board/vendor/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'board/css/board.css' %}">
-		<script type="text/html" id="home-template">
+		
+        <script type="text/html" id="home-template">
 			<h2>Your Sprints</h2>
-            <hr class="front-page">
-			            <button class="add" type="submit">Add Sprint</button>
+            <hr class="sprint-page">
+			            <button class="add-sprint" type="submit">Add Sprint</button>
             <% if (sprints !== null) { %>
                 <div class="sprints">
                     <% _.each(sprints.models, function (sprint) { %>
@@ -27,6 +28,7 @@
                 <h3 class="loading">Loading...</h3>
             <% } %>
         </script>
+        
         <script type="text/html" id="login-template">
         <h1>Welcome to AceScrum</h1>
         <hr class="front-page">
@@ -39,6 +41,7 @@
                 <button type="submit">Login</button>
             </form>
         </script>
+
         <script type="text/html" id="header-template">
             <span class="title"><a href="/">AceScrum</a></span>
             <% if (authenticated ) { %>
@@ -49,6 +52,7 @@
                 </nav>
             <% } %>
         </script>
+
         <script type="text/html" id="new-sprint-template">
             <form action="" method="post">
                 <label for="id_name">Sprint Name</label>
@@ -61,6 +65,7 @@
                 <button type="submit">Create</button>
             </form>
         </script>
+
         <script type="text/html" id="sprint-template">
             <% if (sprint !== null) { %>
                 <% if (!sprint.invalid) { %>
@@ -84,7 +89,7 @@
         	<div class="status-title"><h4><%- title %></h4></div>
         	<div class="list"></div>
         	<% if (sprint === null) { %>
-        		<button class="add" type="submit">Add Task</button>
+        		<button class="add-task" type="submit">Add Task</button>
         	<% } %>
         </script>
 
