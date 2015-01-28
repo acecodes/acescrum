@@ -7,6 +7,7 @@
 		<title>AceScrum | Simple Agile Development</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="{% static 'board/vendor/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'board/css/board.css' %}">
 		<script type="text/html" id="home-template">
@@ -67,8 +68,8 @@
                     <%- sprint.get('end') %></b></span>
                     <hr class="sprints">
                     <p class="description"><%- sprint.get('description') %></p>
+                                        <hr class="sprints">
                     <div class="tasks"></div>
-                    <hr class="sprints">
                     <h3>
                 <% } else { %>
                     <h1>Sprint <%- sprint.get('id') %> not found.</h1>
@@ -79,7 +80,7 @@
         </script>
 
         <script type="text/html" id="status-template">
-        	<h4><%- title %></h4>
+        	<div class="status-title"><h4><%- title %></h4></div>
         	<div class="list"></div>
         	<% if (sprint === null) { %>
         		<button class="add" type="submit">Add Task</button>
@@ -99,7 +100,7 @@
         </script>
 
         <script type="text/html" id="task-item-template">
-            <%- task.get('name') %>
+            <div class="task-item"><%- task.get('name') %></div>
         </script>
 
         <script type="text/html" id="task-detail-template">
@@ -128,7 +129,7 @@
 
 	</head>
 	<body>
-        <div id="content"></div>
+        <div class="container" id="content"></div>
         
         <script src="{% static 'board/vendor/jquery.js' %}"></script>
         <script src="{% static 'board/vendor/underscore.js' %}"></script>
