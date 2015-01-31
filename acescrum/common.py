@@ -23,6 +23,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Tornado settings
+TORNADO_SERVER = os.environ.get('TORNADO_SERVER', 'localhost:8080')
+TORNADO_SECURE = bool(os.environ.get('TORNADO_SECURE', ''))
 
 # Application definition
 

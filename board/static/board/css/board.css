@@ -12,7 +12,8 @@ a {
 a:visited {
     color: black;
 }
-button, a.button {
+button,
+a.button {
     font-size: 13px;
     padding: 5px 8px;
     border: 1px solid #222;
@@ -20,12 +21,14 @@ button, a.button {
     color: #222;
     transition: background 200ms ease-out;
 }
-button:hover, a.button:hover {
+button:hover,
+a.button:hover {
     background-color: #A4C8F0;
     border: 1px solid #03142F;
     color: #03142F;
 }
-input, textarea {
+input,
+textarea {
     background: white;
     font-family: inherit;
     border: 1px solid #cccccc;
@@ -38,7 +41,9 @@ input, textarea {
 input {
     text-align: center;
 }
-input#id_name, input#id_end, input#id_description {
+input#id_name,
+input#id_end,
+input#id_description {
     margin: 3% auto 3% auto;
 }
 #content {
@@ -54,7 +59,12 @@ input#id_name, input#id_end, input#id_description {
     margin: 8px 0;
     display: block;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     text-align: center;
 }
 h3 {
@@ -76,6 +86,19 @@ form {
     margin: 0 auto;
     width: 500px;
     text-align: center;
+}
+* .label {
+color: black;
+}
+.status-title {
+background: white;
+width: 100%;
+padding: 2%;
+margin-top: 4%;
+border: 1px #CDC7C7 solid;
+}
+p.description {
+font-size: 1.5em;
 }
 
 /* Header
@@ -120,10 +143,12 @@ header nav a:hover {
 #login form input {
     margin-bottom: 15px;
 }
-#login form label, #login form input {
+#login form label,
+#login form input {
     display: block;
 }
-input#id_username, input#id_password {
+input#id_username,
+input#id_password {
     margin: 3% auto 3% auto;
 }
 
@@ -175,7 +200,9 @@ input#id_username, input#id_password {
     width: 20%;
     text-align: center;
 }
-.tasks .status input, .tasks .status textarea, .tasks .status input#id_name {
+.tasks .status input,
+.tasks .status textarea,
+.tasks .status input#id_name {
     margin: 5% auto 5% auto;
     width: 90%;
 }
@@ -196,23 +223,22 @@ input#id_username, input#id_password {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-
     -webkit-flex-flow: row wrap;
-
     align-items: strech;
     margin-bottom: 10%;
-    margin-top:5%;
-    background:white;
-    border:1px #CDC7C7 solid;
+    margin-top: 5%;
+    background: white;
+    border: 1px #CDC7C7 solid;
 }
-.task-detail input, .task-detail textarea {
+.task-detail input,
+.task-detail textarea {
     width: 90%;
 }
 .tasks .task-item {
     width: 100%;
     margin: 5px 0;
     padding: 3px;
-    background:#F5F5F5;
+    background: #F5F5F5;
 }
 
 /* Task Detail
@@ -222,12 +248,13 @@ input#id_username, input#id_password {
     margin: 5px 0;
     background-color: #FFF;
     padding: 8px;
-    border-bottom:1px #CDC7C7 solid;;
+    border-bottom: 1px #CDC7C7 solid;
 }
 .task-detail div {
     margin-bottom: 10px;
 }
-.task-detail .name, .task-detail .description {
+.task-detail .name,
+.task-detail .description {
     border-bottom: 1px dotted #333;
 }
 .task-detail
@@ -241,22 +268,15 @@ display: display:display:display:display:
 flex;
 }
 [contenteditable=true]:hover {
-    background: #EEE;
+background: #EEE;
 }
 [contenteditable=true]:focus {
-    background: #FFF;
+background: #FFF;
 }
-
-* .label { color:black; }
-
-.status-title {
-    background: white;
-    width: 100%;
-    padding: 2%;
-    margin-top: 4%;
-    border:1px #CDC7C7 solid;
+[draggable=true] {
+cursor: move;
 }
-
-p.description {
-    font-size:1.5em;
+.tasks .task-item.over {
+opacity: 0.5;
+border: 1px black dotted;
 }
