@@ -227,8 +227,6 @@ input#id_password {
     align-items: strech;
     margin-bottom: 10%;
     margin-top: 5%;
-    background: white;
-    border: 1px #CDC7C7 solid;
 }
 .task-detail input,
 .task-detail textarea {
@@ -238,7 +236,9 @@ input#id_password {
     width: 100%;
     margin: 5px 0;
     padding: 3px;
-    background: #F5F5F5;
+    background: #356D9D;
+    border-radius:5px;
+    color:#FFF;
 }
 
 /* Task Detail
