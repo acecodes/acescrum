@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'board',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -188,7 +188,33 @@
         className: 'status',
         templateName: '#status-template',
         events: {
-            'click button.add-task': 'renderAddForm'
+            'click button.add-task': 'renderAddForm',
+            'dragenter': 'enter',
+            'dragover': 'over',
+            'dragleave': 'leave',
+            'drop': 'drop'
+        },
+        enter: function(event) {
+            event.originalEvent.dataTransfer.effectAllowed = 'move';
+            event.preventDefault();
+            this.$el.addClass('over');
+        },
+        over: function(event) {
+            event.originalEvent.dataTransfer.dropEffect = 'move';
+            event.preventDefault();
+            return false;
+        },
+        leave: function(event) {
+            this.$el.removeClass('over');
+        },
+        drop: function(event) {
+            var dataTransfer = event.originalEvent.dataTransfer,
+                task = dataTransfer.getData('application/model');
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            }
+            this.trigger('drop', task);
+            this.leave();
         },
         initialize: function(options) {
             TemplateView.prototype.initialize.apply(this, arguments);
@@ -396,6 +422,15 @@
                     title: 'Completed'
                 })
             };
+            _.each(this.statuses, function (view, name) {
+                view.on('drop', function (model) {
+                    this.socket.send({
+                        model: 'task',
+                        id: model.get('id'),
+                        action: 'drop'
+                    });
+                }, this);
+            }, this);
             this.socket = null;
             app.collections.ready.done(function() {
                 app.tasks.on('add', self.addTask, self);
@@ -462,6 +497,27 @@
                 }
             });
             view.render();
+            view.on('dragstart', function(model) {
+                this.socket.send({
+                    model: 'task',
+                    id: model.get('id'),
+                    action: 'dragstart'
+                });
+            }, this);
+            view.on('dragend', function(model) {
+                this.socket.send({
+                    model: 'task',
+                    id: model.get('id'),
+                    action: 'dragend'
+                });
+            }, this);
+            view.on('drop', function(model) {
+                this.socket.send({
+                    model: 'task',
+                    id: model.get('id'),
+                    action: 'drop'
+                });
+            }, this);
             return view;
         }
     });

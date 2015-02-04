@@ -12,8 +12,7 @@ a {
 a:visited {
     color: black;
 }
-button,
-a.button {
+button, a.button {
     font-size: 13px;
     padding: 5px 8px;
     border: 1px solid #222;
@@ -21,14 +20,12 @@ a.button {
     color: #222;
     transition: background 200ms ease-out;
 }
-button:hover,
-a.button:hover {
+button:hover, a.button:hover {
     background-color: #A4C8F0;
     border: 1px solid #03142F;
     color: #03142F;
 }
-input,
-textarea {
+input, textarea {
     background: white;
     font-family: inherit;
     border: 1px solid #cccccc;
@@ -41,9 +38,7 @@ textarea {
 input {
     text-align: center;
 }
-input#id_name,
-input#id_end,
-input#id_description {
+input#id_name, input#id_end, input#id_description {
     margin: 3% auto 3% auto;
 }
 #content {
@@ -59,12 +54,7 @@ input#id_description {
     margin: 8px 0;
     display: block;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 h3 {
@@ -88,17 +78,17 @@ form {
     text-align: center;
 }
 * .label {
-color: black;
+    color: black;
 }
 .status-title {
-background: white;
-width: 100%;
-padding: 2%;
-margin-top: 4%;
-border: 1px #CDC7C7 solid;
+    background: white;
+    width: 100%;
+    padding: 2%;
+    margin-top: 4%;
+    border: 1px #CDC7C7 solid;
 }
 p.description {
-font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 /* Header
@@ -143,12 +133,10 @@ header nav a:hover {
 #login form input {
     margin-bottom: 15px;
 }
-#login form label,
-#login form input {
+#login form label, #login form input {
     display: block;
 }
-input#id_username,
-input#id_password {
+input#id_username, input#id_password {
     margin: 3% auto 3% auto;
 }
 
@@ -200,9 +188,7 @@ input#id_password {
     width: 20%;
     text-align: center;
 }
-.tasks .status input,
-.tasks .status textarea,
-.tasks .status input#id_name {
+.tasks .status input, .tasks .status textarea, .tasks .status input#id_name {
     margin: 5% auto 5% auto;
     width: 90%;
 }
@@ -228,8 +214,7 @@ input#id_password {
     margin-bottom: 10%;
     margin-top: 5%;
 }
-.task-detail input,
-.task-detail textarea {
+.task-detail input, .task-detail textarea {
     width: 90%;
 }
 .tasks .task-item {
@@ -237,8 +222,8 @@ input#id_password {
     margin: 5px 0;
     padding: 3px;
     background: #356D9D;
-    border-radius:5px;
-    color:#FFF;
+    border-radius: 5px;
+    color: #FFF;
 }
 
 /* Task Detail
@@ -253,8 +238,7 @@ input#id_password {
 .task-detail div {
     margin-bottom: 10px;
 }
-.task-detail .name,
-.task-detail .description {
+.task-detail .name, .task-detail .description {
     border-bottom: 1px dotted #333;
 }
 .task-detail
@@ -278,5 +262,8 @@ cursor: move;
 }
 .tasks .task-item.over {
 opacity: 0.5;
+border: 1px black dotted;
+}
+.tasks .status.over {
 border: 1px black dotted;
 }
