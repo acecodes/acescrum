@@ -32,7 +32,9 @@ class DefaultsMixin(object):
         filters.OrderingFilter,
     )
 
-    class UpdateHookMixin:
+
+class UpdateHookMixin:
+
     """Mixin class for sending update information to websocket server"""
 
     def _build_hook_url(self, obj):
