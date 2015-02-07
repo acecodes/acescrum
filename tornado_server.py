@@ -13,6 +13,7 @@ import logging
 import signal
 import time
 import json
+import uuid
 
 
 define('debug', default=False, type=bool, help='Run in debug mode')
@@ -54,7 +55,8 @@ class SprintHandler(WebSocketHandler):
 
     def open(self, sprint):
         """Subscribe to sprint updates on a new connection"""
-        self.sprint = sprint
+        self.sprint = sprint.decode('utf-8')
+        self.uid = uuid.uuid().hex
         self.application.add_subscriber(self.sprint, self)
 
     def on_message(self, message):
@@ -70,13 +72,21 @@ class RedisSubscriber(BaseSubScriber):
     def on_message(self, msg):
         """Handle new message on Redis channel"""
         if msg and msg.kind == 'message':
+            try:
+                message = json.loads(msg.body)
+                sender = message['sender']
+                message = message['message']
+            except (ValueError, KeyError):
+                message = msg.body
+                sender = None
             subscribers = list(self.subscribers[msg.channel].keys())
             for subscriber in subscribers:
-                try:
-                    subscriber.write_message(msg.body)
-                except tornado.websocket.WebSocketClosedError:
-                    # Remove dead peer
-                    self.unsubscribe(msg.channel, subscriber)
+                if sender is None or sender != subscriber.uid:
+                    try:
+                        subscriber.write_message(msg.body)
+                    except tornado.websocket.WebSocketClosedError:
+                        # Remove dead peer
+                        self.unsubscribe(msg.channel, subscriber)
             super().on_message(msg)
 
 
@@ -101,6 +111,10 @@ class ScrumApplication(Application):
 
     def broadcast(self, message, channel=None, sender=None):
         channel = 'all' if channel is None else channel
+        messsage = json.dumps({
+            'sender': sender and sender.uid,
+            'message': message
+            })
         self.publisher.publish(channel, message)
 
 
