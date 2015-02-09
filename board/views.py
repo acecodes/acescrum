@@ -1,12 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.core.signing import TimestampSigner
 from rest_framework import authentication, permissions, viewsets, filters
+from rest_framework.renderers import JSONRenderer
 from .models import Sprint, Task
 from .serializers import SprintSerializer, TaskSerializer, UserSerializer
 from .forms import TaskFilter, SprintFilter
 
 import requests
-
+import hashlib
 
 User = get_user_model()
 
@@ -48,8 +50,21 @@ class UpdateHookMixin:
 
     def _send_hook_request(self, obj, method):
         url = self._build_hook_url(obj)
+        if method in ('post', 'put'):
+            # Build body
+            serializer = self.get_serializer(obj)
+            renderer = JSONRenderer()
+            context = {'request': self.request}
+            body = renderer.render(serializer.data, renderer_context=context)
+        else:
+            body = None
+        headers = {
+            'content-type': 'application/json',
+            'X-Signature': self._build_hook_signature(method, url, body),
+        }
         try:
-            response = requests.request(method, url, timeout=0.5)
+            response = requests.request(method, url,
+                                        timeout=0.5, headers=headers)
             response.raise_for_status()
         except requests.exceptions.ConnectionError:
             """Host cannot be resolved or connection refused"""
@@ -67,6 +82,15 @@ class UpdateHookMixin:
 
     def pre_delete(self, obj):
         self._send_hook_request(obj, 'DELETE')
+
+    def _build_hook_signature(self, method, url, body):
+        signer = TimestampSigner(settings.WATERCOOLER_SECRET)
+        value = '{method}:{url}:{body}'.format(
+            method=method.lower(),
+            url=url,
+            body=hashlib.sha256(body or b'').hexdigest(),
+            )
+        return signer.sign(value)
 
 
 class SprintViewSet(DefaultsMixin, UpdateHookMixin, viewsets.ModelViewSet):

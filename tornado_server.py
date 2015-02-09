@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 from tornado.ioloop import IOLoop
-from tornado.web import Application, RequestHandler
+from tornado.web import Application, RequestHandler, HTTPError
 from tornado.options import define, parse_command_line, options
 from tornado.websocket import WebSocketHandler, WebSocketClosedError
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
@@ -9,6 +9,7 @@ from collections import defaultdict
 from redis import Redis
 from tornadoredis import Client
 from tornadoredis.pubsub import BaseSubscriber
+from django.utils.crypto import constant_time_compare
 
 import logging
 import signal
@@ -16,6 +17,7 @@ import time
 import json
 import uuid
 import os
+import hashlib
 
 
 define('debug', default=False, type=bool, help='Run in debug mode')
@@ -37,10 +39,30 @@ class UpdateHandler(RequestHandler):
         self._broadcast(model, pk, 'remove')
 
     def _broadcast(self, model, pk, action):
+        signature = self.request.headers.get('X-Signature', None)
+        if not signature:
+            raise HTTPError(400)
+        try:
+            result = self.application.signer.unsign(signature, max_age=60*1)
+        except (BadSignature, SignatureExpired):
+            raise HTTPError(400)
+        else:
+            expected = '{method}:{url}:{body}'.format(
+                method=self.request.method.lower(),
+                url=self.request.full_url(),
+                body=hashlib.sha256(self.request.body).hexdigest(),
+                )
+            if not constant_time_compare(result, expected):
+                raise HTTPError(400)
+        try:
+            body = json.loads(self.request.body.decode('utf-8'))
+        except ValueError:
+            body = None
         message = json.dumps({
             'model': model,
             'id': pk,
             'action': action,
+            'body': body,
         })
         self.application.broadcast(message)
         self.write('OK')
@@ -98,7 +120,7 @@ class RedisSubscriber(BaseSubscriber):
                 if sender is None or sender != subscriber.uid:
                     try:
                         subscriber.write_message(msg.body)
-                    except tornado.websocket.WebSocketClosedError:
+                    except WebSocketClosedError:
                         # Remove dead peer
                         self.unsubscribe(msg.channel, subscriber)
             super().on_message(msg)
