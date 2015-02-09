@@ -3,6 +3,7 @@ from rest_framework.reverse import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from django.core.signing import TimestampSigner
 from datetime import date
 from .models import *
 
@@ -10,6 +11,7 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     full_name = serializers.CharField(source='get_full_name', read_only=True)
     links = serializers.SerializerMethodField()
 
@@ -40,6 +42,8 @@ class SprintSerializer(serializers.ModelSerializer):
 
     def get_links(self, obj):
         request = self.context['request']
+        signer = TimestampSigner(settings.TORNADO_SECRET)
+        channel = signer.sign(obj.pk)
 
         return {
             'self': reverse('sprint-detail',
@@ -49,7 +53,8 @@ class SprintSerializer(serializers.ModelSerializer):
             'channel': '{proto}://{server}/{channel}'.format(
                 proto='wss' if settings.TORNADO_SECURE else 'ws',
                 server=settings.TORNADO_SERVER,
-                channel=obj.pk)
+                channel=channel,
+                )
         }
 
     def validate_end(self, attrs, source):

@@ -51,8 +51,14 @@
                     <a href="/" class="button">Your Sprints</a>
                     <a href="#" class="logout button">Logout</a>
                     <a href="https://github.com/acecodes/acescrum" class="button">GitHub</a>
+                    <a href="/api" class="button">API</a>
                 </nav>
-            <% } %>
+            <% } else { %>
+                <nav>
+                    <a href="https://github.com/acecodes/acescrum" class="button">GitHub</a>
+                    <a href="/api" class="button">API</a>
+                </nav>
+           <% } %>
         </script>
 
         <script type="text/html" id="new-sprint-template">
