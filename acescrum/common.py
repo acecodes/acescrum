@@ -16,17 +16,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = ['lolcahost']
+ALLOWED_HOSTS = ['localhost']
 
 # Tornado settings
 TORNADO_SERVER = os.environ.get('TORNADO_SERVER', 'localhost:8080')
 TORNADO_SECURE = bool(os.environ.get('TORNADO_SECURE', ''))
-TORNADO_SECRET = os.environ.get('TORNADO_SECRET', 'f56A89be7@37714e0!d890z103b^4f6k380b+25')
+TORNADO_SECRET = os.environ.get('TORNADO_SECRET',
+                                'f56A89be7@37714e0!d890z103b^4f6k380b+25')
 
 # Application definition
 
